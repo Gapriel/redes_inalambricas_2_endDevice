@@ -133,6 +133,7 @@ void TimerTask(osaTaskParam_t argument)
 			mpPacket->msgData.dataReq.pMsdu[6] = 'r';
 			mpPacket->msgData.dataReq.pMsdu[7] = ':';
 			mpPacket->msgData.dataReq.pMsdu[8] = timerCounter + '0';
+			mpPacket->msgData.dataReq.pMsdu[9] = '\0';
 			/* Create the header using coordinator information gained during
 			the scan procedure. Also use the short address we were assigned
 			by the coordinator during association. */
@@ -142,7 +143,7 @@ void TimerTask(osaTaskParam_t argument)
 			FLib_MemCpy(&mpPacket->msgData.dataReq.srcPanId, &mCoordInfo.coordPanId, 2);
 			mpPacket->msgData.dataReq.dstAddrMode = mCoordInfo.coordAddrMode;
 			mpPacket->msgData.dataReq.srcAddrMode = mAddrMode;
-			mpPacket->msgData.dataReq.msduLength = 9;
+			mpPacket->msgData.dataReq.msduLength = 10;
 			/* Request MAC level acknowledgement of the data packet */
 			mpPacket->msgData.dataReq.txOptions = gMacTxOptionsAck_c;
 			/* Give the data packet a handle. The handle is

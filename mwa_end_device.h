@@ -41,6 +41,8 @@
 #ifndef _APP_H_
 #define _APP_H_
 
+#define END_DEVICE		3
+
 /*! *********************************************************************************
 *************************************************************************************
 * Include
@@ -52,8 +54,17 @@
 * Public macros
 *************************************************************************************
 ************************************************************************************/
-
+#if END_DEVICE == 1
 #define mMacExtendedAddress_c      (0xFFFFFFFFFFFFFFFF)
+#elif END_DEVICE == 2
+#define mMacExtendedAddress_c      (0xFFFFFFFFFFFF0000)
+#elif END_DEVICE == 3
+#define mMacExtendedAddress_c      (0xFFFFFFFF0000FFFF)
+#elif END_DEVICE == 4
+#define mMacExtendedAddress_c      (0xFFFF0000FFFFFFFF)
+#elif END_DEVICE == 5
+#define mMacExtendedAddress_c      (0x0000FFFFFFFFFFFF)
+#endif
 
 #ifndef gNvmTestActive_d
 #define gNvmTestActive_d           (0)

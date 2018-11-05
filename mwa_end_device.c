@@ -349,7 +349,17 @@ void App_init( void )
     mcPendingPackets = 0;
 
     /* Allow sending a poll request */  
-    mWaitPollConfirm = FALSE;    
+#if END_DEVICE == 1
+      mWaitPollConfirm = FALSE;
+#elif END_DEVICE == 2
+      mWaitPollConfirm = TRUE;
+#elif END_DEVICE == 3
+      mWaitPollConfirm = TRUE;
+#elif END_DEVICE == 4
+    mWaitPollConfirm = FALSE;
+#elif END_DEVICE == 5
+    mWaitPollConfirm = FALSE;
+#endif
     
     /* Initialize the poll interval */
     mPollInterval = mDefaultValueOfPollIntervalSlow_c;
@@ -896,7 +906,17 @@ static uint8_t App_SendAssociateRequest(void)
 #endif
 
     /* We want the coordinator to assign a short address to us. */
+#if END_DEVICE == 1
     pAssocReq->capabilityInfo     = gCapInfoAllocAddr_c;
+#elif END_DEVICE == 2
+    pAssocReq->capabilityInfo     = gCapInfoRxWhenIdle_c | gCapInfoDeviceFfd_c | gCapInfoAllocAddr_c;
+#elif END_DEVICE == 3
+    pAssocReq->capabilityInfo     = gCapInfoRxWhenIdle_c | gCapInfoDeviceFfd_c | gCapInfoAllocAddr_c;
+#elif END_DEVICE == 4
+    pAssocReq->capabilityInfo     = gCapInfoAllocAddr_c;
+#elif END_DEVICE == 5
+    pAssocReq->capabilityInfo     = gCapInfoAllocAddr_c;
+#endif
       
     /* Send the Associate Request to the MLME. */
     if(NWK_MLME_SapHandler( pMsg, macInstance ) == gSuccess_c)
@@ -986,7 +1006,18 @@ static uint8_t App_HandleMlmeInput(nwkMessage_t *pMsg)
       /* If we get to this point, then no data was available, and we
          allow a new poll request. Otherwise, we wait for the data
          indication before allowing the next poll request. */
+//      mWaitPollConfirm = FALSE;
+#if END_DEVICE == 1
       mWaitPollConfirm = FALSE;
+#elif END_DEVICE == 2
+      mWaitPollConfirm = TRUE;
+#elif END_DEVICE == 3
+      mWaitPollConfirm = TRUE;
+#elif END_DEVICE == 4
+    mWaitPollConfirm = FALSE;
+#elif END_DEVICE == 5
+    mWaitPollConfirm = FALSE;
+#endif
 #if gNvmTestActive_d      
       if(pMsg->msgData.pollCnf.status == gNoAck_c)
       {
@@ -1042,7 +1073,18 @@ static void App_HandleMcpsInput(mcpsToNwkMessage_t *pMsgIn)
        available. */
     mPollInterval = mDefaultValueOfPollIntervalFast_c;
     /* Allow another MLME-Poll request. */
+//    mWaitPollConfirm = FALSE;
+#if END_DEVICE == 1
+      mWaitPollConfirm = FALSE;
+#elif END_DEVICE == 2
+      mWaitPollConfirm = TRUE;
+#elif END_DEVICE == 3
+      mWaitPollConfirm = TRUE;
+#elif END_DEVICE == 4
     mWaitPollConfirm = FALSE;
+#elif END_DEVICE == 5
+    mWaitPollConfirm = FALSE;
+#endif
     break;
 
   default:
